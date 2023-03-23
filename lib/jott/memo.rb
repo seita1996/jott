@@ -10,11 +10,23 @@ class Memo
     @db.execute("SELECT * FROM memos")
   end
 
-  def add(title, body)
+  def clear
+    @db.execute("DROP TABLE memos")
+  end
+
+  def count
+    @db.execute("SELECT COUNT(id) FROM memos")
+  end
+
+  def create(title:, body:)
     @db.execute("INSERT INTO memos(title, body) VALUES (?, ?)", [title, body])
   end
 
-  def delete(id)
+  def delete(id:)
     @db.execute("DELETE FROM memos WHERE id = ?", id)
+  end
+
+  def last
+    @db.execute("SELECT max(id), * FROM memos")
   end
 end
