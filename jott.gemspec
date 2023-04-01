@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "CLI application for a little note"
   # spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "https://github.com/seita1996/jott"
+  spec.homepage = "https://rubygems.org/gems/jott"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
@@ -28,11 +28,15 @@ Gem::Specification.new do |spec|
     end
   end
   spec.bindir = "exe"
-  spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
+  spec.executables = "jott"
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
+  spec.add_dependency "colorize"
+  spec.add_dependency "sqlite3"
+  spec.add_dependency "thor"
+
+  spec.add_development_dependency("rspec", "~> 3.0")
+  spec.add_development_dependency("rubocop", "~> 1.21")
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
