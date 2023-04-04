@@ -1,6 +1,7 @@
-require 'thor'
 require 'colorize'
+require 'thor'
 require_relative 'memo'
+require_relative 'version'
 
 class CLI < Thor
   desc "clear", "clear all memos"
@@ -29,6 +30,11 @@ class CLI < Thor
     memos.each do |memo|
       puts "#{memo[0]}. #{memo[1]}: #{memo[2]}"
     end
+  end
+
+  desc "version", "show version"
+  def version
+    puts "jott version #{Jott::VERSION}"
   end
 end
 

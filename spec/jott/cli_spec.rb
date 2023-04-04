@@ -123,4 +123,14 @@ RSpec.describe CLI do
       end
     end
   end
+
+  describe "#version" do
+    context "when executed" do
+      it "shows version" do
+        expect {
+          CLI.start(['version'])
+        }.to output("jott version #{Jott::VERSION}\n").to_stdout
+      end
+    end
+  end
 end
