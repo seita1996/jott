@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    jott (0.1.2)
+    jott (0.1.3)
       colorize
       sqlite3
       thor
