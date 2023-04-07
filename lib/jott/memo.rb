@@ -2,7 +2,7 @@ require 'sqlite3'
 
 class Memo
   def initialize
-    @db = SQLite3::Database.new("memo.db")
+    @db = SQLite3::Database.new(File.join(File.dirname(__FILE__), "jott.db"))
     @db.execute("CREATE TABLE IF NOT EXISTS memos(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, body TEXT)")
   end
 
