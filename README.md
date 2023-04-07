@@ -1,3 +1,7 @@
+[![Test](https://github.com/seita1996/jott/actions/workflows/test.yml/badge.svg)](https://github.com/seita1996/jott/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Gem](https://img.shields.io/gem/dt/jott?color=orange)
+
 # Jott
 
 A CLI application that allows you to create small memos.
