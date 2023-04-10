@@ -12,7 +12,8 @@ class CLI < Thor
   end
 
   desc "add", "Add a new memo"
-  def add(text)
+  def add(*str)
+    text = str.join(" ")
     title = text[0, 30]
     Memo.new.create(title:, body: text)
     puts "Added new memo: #{title}".colorize(:green)

@@ -82,6 +82,23 @@ RSpec.describe CLI do
       end
     end
 
+    context "when command executed by multiple text args" do
+      let(:arg) { ['Hi', 'Bob.', 'How', 'are', 'you?'] }
+
+      it "added message and the memo added are displayed in green." do
+        expect {
+          CLI.start(['add', arg])
+        }.to output("Added new memo: #{arg.join(' ')}".colorize(:green).concat("\n")).to_stdout
+      end
+
+      it "adds a new memo" do
+        init_count = Memo.new.count[0][0]
+        CLI.start(['add', arg])
+        final_count = Memo.new.count[0][0]
+        expect(final_count).to eq init_count + 1
+      end
+    end
+
     # TODO: Add tests for anomalous systems
   end
 
