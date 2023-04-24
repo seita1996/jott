@@ -26,6 +26,10 @@ class Memo
     @db.execute("DELETE FROM memos WHERE id = ?", id)
   end
 
+  def find(id)
+    @db.execute("SELECT * FROM memos WHERE id = ?", id)
+  end
+
   def last
     @db.execute("SELECT max(id), * FROM memos")
   end

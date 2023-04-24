@@ -141,6 +141,21 @@ RSpec.describe CLI do
     end
   end
 
+  describe "#show" do
+    context "when an existing id is passed as an arg" do
+      let(:memo) { Memo.new.create(title: 'test', body: 'test') }
+      let(:id) { Memo.new.last[0][0] }
+
+      it "memo record (body) is displayed." do
+        Memo.new.clear
+        memo
+        expect {
+          CLI.start(['show', id])
+        }.to output("test\n").to_stdout
+      end
+    end
+  end
+
   describe "#version" do
     context "when executed" do
       it "shows version" do

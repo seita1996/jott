@@ -33,6 +33,12 @@ class CLI < Thor
     end
   end
 
+  desc "show", "show memo ID"
+  def show(id)
+    memo = Memo.new.find(id)
+    puts "#{memo[0][2]}"
+  end
+
   desc "version", "show version"
   def version
     puts "jott version #{Jott::VERSION}"
