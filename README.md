@@ -18,13 +18,34 @@ $ gem install jott
 Create a new memo
 
 ```
-$ jott add 'This is first memo'
+$ jott add This is first memo
+
+or
+
+$ jott add
+-> open your editor
 ```
 
 List memos
 
 ```
 $ jott ls
+```
+
+Edit the memo
+
+```
+$ jott edit 1 This is updated memo
+
+or
+
+$ jott edit 1
+-> open your editor
+
+or
+
+$ jott edit
+-> open your editor (last memo)
 ```
 
 Delete the memo

@@ -1,4 +1,5 @@
 require 'colorize'
+require 'tempfile'
 require 'thor'
 require_relative 'memo'
 require_relative 'version'
@@ -13,7 +14,14 @@ class CLI < Thor
 
   desc "add", "Add a new memo"
   def add(*str)
-    text = str.join(" ")
+    if str.empty? # open text editor
+      tempfile = Tempfile.new
+      system("vim", tempfile.path)
+      text = File.read(tempfile.path)
+      tempfile.unlink
+    else # add memo from command line
+      text = str.join(" ")
+    end
     title = text[0, 30]
     Memo.new.create(title:, body: text)
     puts "Added new memo: #{title}".colorize(:green)
@@ -23,6 +31,31 @@ class CLI < Thor
   def rm(id)
     Memo.new.delete(id:)
     puts "Deleted the memo: #{id}".colorize(:green)
+  end
+
+  desc "edit", "open the memo with text editor and update"
+  def edit(*args)
+    id = args.first
+    id = Memo.new.last[0][0] if id.nil?
+    str = args[1..-1]
+    memo = Memo.new.find(id)
+
+    if str.nil? || str.empty? # open text editor
+      tempfile = Tempfile.new
+      File.open(tempfile.path, "w") do |f|
+        f.puts memo[0][2]
+      end
+      system("vim", tempfile.path)
+      data = File.read(tempfile.path)
+      Memo.new.update(id: id, title: data[0, 30], body: data)
+      tempfile.unlink
+      puts "Edited the memo: #{id}".colorize(:green)
+    else # add memo from command line
+      text = str.join(" ")
+      title = text[0, 30]
+      Memo.new.update(id: id, title: title, body: text)
+      puts "Edited the memo: #{id}".colorize(:green)
+    end
   end
 
   desc "list", "list all memos"

@@ -19,6 +19,7 @@ class Memo
   end
 
   def create(title:, body:)
+    title = title.gsub(/\n/, "")
     @db.execute("INSERT INTO memos(title, body) VALUES (?, ?)", [title, body])
   end
 
@@ -32,5 +33,10 @@ class Memo
 
   def last
     @db.execute("SELECT max(id), * FROM memos")
+  end
+
+  def update(id:, title:, body:)
+    title = title.gsub(/\n/, "")
+    @db.execute("UPDATE memos SET title = ?, body = ? WHERE id = ?", [title, body, id])
   end
 end

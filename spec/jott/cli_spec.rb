@@ -99,7 +99,7 @@ RSpec.describe CLI do
       end
     end
 
-    # TODO: Add tests for anomalous systems
+    # Add tests open an editor
   end
 
   describe "#rm" do
@@ -123,6 +123,88 @@ RSpec.describe CLI do
     end
 
     # TODO: Add tests for anomalous systems
+  end
+
+  describe "#edit" do
+    let(:memo) { Memo.new.create(title: 'test', body: 'test') }
+    let(:id) { Memo.new.last[0][0] }
+
+    context "when command executed by over 30 chars args" do
+      let(:text) { 'There is always light behind the clouds.' }
+
+      it "edited message and the id are displayed in green." do
+        expect {
+          CLI.start(['edit', id, text])
+        }.to output("Edited the memo: #{id}".colorize(:green).concat("\n")).to_stdout
+      end
+
+      it "does not add a new memo" do
+        memo
+        init_count = Memo.new.count[0][0]
+        CLI.start(['edit', id, text])
+        final_count = Memo.new.count[0][0]
+        expect(final_count).to eq init_count
+      end
+
+      it "the title of the edited memo is the first 30 chars of the memo." do
+        first_30_chars = 'There is always light behind t'
+        CLI.start(['edit', id, text])
+        expect(Memo.new.last[0][2]).to eq first_30_chars
+      end
+
+      it "the body of the edited memo is the text entered." do
+        CLI.start(['edit', id, text])
+        expect(Memo.new.last[0][3]).to eq text
+      end
+    end
+
+    context "when command executed by under 30 chars args" do
+      let(:text) { 'Hi Bob.' }
+
+      it "edited message and the memo edited are displayed in green." do
+        expect {
+          CLI.start(['edit', id, text])
+        }.to output("Edited the memo: #{id}".colorize(:green).concat("\n")).to_stdout
+      end
+
+      it "does not add a new memo" do
+        memo
+        init_count = Memo.new.count[0][0]
+        CLI.start(['edit', id, text])
+        final_count = Memo.new.count[0][0]
+        expect(final_count).to eq init_count
+      end
+
+      it "the title of the edited memo is the text entered." do
+        CLI.start(['edit', id, text])
+        expect(Memo.new.last[0][2]).to eq text
+      end
+
+      it "the body of the edited memo is the text entered." do
+        CLI.start(['edit', id, text])
+        expect(Memo.new.last[0][3]).to eq text
+      end
+    end
+
+    context "when command executed by multiple text args" do
+      let(:arg) { ['Hi', 'Bob.', 'How', 'are', 'you?'] }
+
+      it "edited message and the memo edited are displayed in green." do
+        expect {
+          CLI.start(['edit', id, arg])
+        }.to output("Edited the memo: #{id}".colorize(:green).concat("\n")).to_stdout
+      end
+
+      it "does not add a new memo" do
+        memo
+        init_count = Memo.new.count[0][0]
+        CLI.start(['edit', id, arg])
+        final_count = Memo.new.count[0][0]
+        expect(final_count).to eq init_count
+      end
+    end
+
+    # TODO: Add tests open an editor
   end
 
   describe "#ls" do
