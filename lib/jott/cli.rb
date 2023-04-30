@@ -1,6 +1,7 @@
 require 'colorize'
 require 'tempfile'
 require 'thor'
+require_relative 'config'
 require_relative 'memo'
 require_relative 'version'
 
@@ -16,7 +17,7 @@ class CLI < Thor
   def add(*str)
     if str.empty? # open text editor
       tempfile = Tempfile.new
-      system("vim", tempfile.path)
+      system(editor, tempfile.path)
       text = File.read(tempfile.path)
       tempfile.unlink
     else # add memo from command line
@@ -45,7 +46,7 @@ class CLI < Thor
       File.open(tempfile.path, "w") do |f|
         f.puts memo[0][2]
       end
-      system("vim", tempfile.path)
+      system(editor, tempfile.path)
       data = File.read(tempfile.path)
       Memo.new.update(id: id, title: data[0, 30], body: data)
       tempfile.unlink
@@ -72,9 +73,26 @@ class CLI < Thor
     puts "#{memo[0][2]}"
   end
 
+  desc "set-editor", "Set the default editor"
+  def set_editor(editor)
+    Config.new.set_editor(editor)
+    puts "Set editor: #{editor}".colorize(:green)
+  end
+
+  desc "config", "Show the current configuration"
+  def config
+    puts "editor: #{editor}"
+  end
+
   desc "version", "show version"
   def version
     puts "jott version #{Jott::VERSION}"
+  end
+
+  private
+
+  def editor
+    Config.new.editor
   end
 end
 

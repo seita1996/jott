@@ -12,3 +12,6 @@
 
 # SQLite database file
 *.db
+
+# Config file
+*.config

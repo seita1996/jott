@@ -238,6 +238,48 @@ RSpec.describe CLI do
     end
   end
 
+  describe "set-editor" do
+    context "when command executed by an editor name" do
+      let(:editor) { 'vim' }
+
+      it "editor name is displayed in green." do
+        expect {
+          CLI.start(['set-editor', editor])
+        }.to output("Set editor: #{editor}".colorize(:green).concat("\n")).to_stdout
+      end
+
+      it "editor name is saved in the config file." do
+        CLI.start(['set-editor', editor])
+        expect(Config.new.editor).to eq editor
+      end
+    end
+
+    context "when command executed by an editor name with a space" do
+      let(:editor) { 'vim -u NONE' }
+
+      it "editor name is displayed in green." do
+        expect {
+          CLI.start(['set-editor', editor])
+        }.to output("Set editor: #{editor}".colorize(:green).concat("\n")).to_stdout
+      end
+
+      it "editor name is saved in the config file." do
+        CLI.start(['set-editor', editor])
+        expect(Config.new.editor).to eq editor
+      end
+    end
+  end
+
+  describe "#config" do
+    context "when executed" do
+      it "editor name is displayed." do
+        expect {
+          CLI.start(['config'])
+        }.to output("editor: #{Config.new.editor}\n").to_stdout
+      end
+    end
+  end
+
   describe "#version" do
     context "when executed" do
       it "shows version" do
