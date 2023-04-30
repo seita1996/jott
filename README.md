@@ -1,8 +1,9 @@
+![E8BFE9C9-1977-478D-92AD-5509D48835EC](https://user-images.githubusercontent.com/19267892/235329218-9b7d9721-9414-4341-8dd6-b91fe39d3204.png)
+
+
 [![Test](https://github.com/seita1996/jott/actions/workflows/test.yml/badge.svg)](https://github.com/seita1996/jott/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Gem](https://img.shields.io/gem/dt/jott?color=orange)
-
-# Jott
 
 A CLI application that allows you to create small memos.
 It can be installed as a Ruby Gem, and you can create, delete and display memos with the jott command.
