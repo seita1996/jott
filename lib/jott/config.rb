@@ -14,11 +14,10 @@ class Config
       file.each_line do |line|
         if line.include?("editor")
           return line.split(":")[1].strip
-        else
-          return "vi"
         end
       end
     end
+    return "vi"
   end
 
   def set_editor(editor)
