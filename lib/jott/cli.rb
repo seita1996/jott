@@ -23,6 +23,12 @@ class CLI < Thor
     else # add memo from command line
       text = str.join(" ")
     end
+
+    if text.chomp == ""
+      puts "Please enter text.".colorize(:red)
+      exit
+    end
+
     title = text[0, 30]
     Memo.new.create(title:, body: text)
     puts "Added new memo: #{title}".colorize(:green)
@@ -47,16 +53,20 @@ class CLI < Thor
         f.puts memo[0][2]
       end
       system(editor, tempfile.path)
-      data = File.read(tempfile.path)
-      Memo.new.update(id: id, title: data[0, 30], body: data)
+      text = File.read(tempfile.path)
       tempfile.unlink
-      puts "Edited the memo: #{id}".colorize(:green)
     else # add memo from command line
       text = str.join(" ")
-      title = text[0, 30]
-      Memo.new.update(id: id, title: title, body: text)
-      puts "Edited the memo: #{id}".colorize(:green)
     end
+
+    if text.chomp == ""
+      puts "Please enter text.".colorize(:red)
+      exit
+    end
+
+    title = text[0, 30]
+    Memo.new.update(id: id, title: title, body: text)
+    puts "Edited the memo: #{id}".colorize(:green)
   end
 
   desc "list", "list all memos"
