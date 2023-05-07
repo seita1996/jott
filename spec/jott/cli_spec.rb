@@ -212,13 +212,13 @@ RSpec.describe CLI do
       let(:memo1) { Memo.new.create(title: 'test1', body: 'test1') }
       let(:memo2) { Memo.new.create(title: 'test2', body: 'test2') }
 
-      it "memo records (id. title: body) are displayed in order of oldest to newest." do
+      it "memo records (id. title) are displayed in order of oldest to newest." do
         Memo.new.clear
         memo1
         memo2
         expect {
           CLI.start(['ls'])
-        }.to output("1. test1: test1\n2. test2: test2\n").to_stdout
+        }.to output("1. test1\n2. test2\n").to_stdout
       end
     end
   end

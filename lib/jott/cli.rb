@@ -73,7 +73,7 @@ class CLI < Thor
   def ls
     memos = Memo.new.all
     memos.each do |memo|
-      puts "#{memo[0]}. #{memo[1]}: #{memo[2]}"
+      puts "#{memo[0]}. #{memo[1]}"
     end
   end
 
