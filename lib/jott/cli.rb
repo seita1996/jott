@@ -7,7 +7,6 @@ require_relative 'version'
 
 class CLI < Thor
   desc "clear", "clear all memos"
-  method_option :aliases => "-cl"
   def clear
     Memo.new.clear
     puts "Clear all memos".colorize(:green)
